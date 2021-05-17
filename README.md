@@ -23,7 +23,8 @@ VSS->Platform.io（VSS左侧小图标的“蚂蚁头”）->左侧PROJECT TASKS�
 -DTLM_REPORT_INTERVAL_MS=320LU
 -DFEATURE_OPENTX_SYNC
 -DUART_INVERTED
--DLOCK_ON_FIRST_CONNECTION```
+-DLOCK_ON_FIRST_CONNECTION
+```
 
 例2：diy 2400 tx
 ```-DMY_BINDING_PHRASE="myelrs2g4"
@@ -31,7 +32,8 @@ VSS->Platform.io（VSS左侧小图标的“蚂蚁头”）->左侧PROJECT TASKS�
 -DHYBRID_SWITCHES_8
 -DTLM_REPORT_INTERVAL_MS=320LU
 -DFEATURE_OPENTX_SYNC
--DUART_INVERTED```
+-DUART_INVERTED
+```
 
 点击build编译代码，插上对应的硬件（串口或者STlink），点击Upload即可上传到硬件。
 
@@ -47,7 +49,8 @@ build_flags =
 	${common_env_data.build_flags_tx}
 	-D TARGET_EXPRESSLRS_PCB_TX_V3
 	-D TARGET_1000mW_MODULE
-src_filter = ${env_common_esp32.src_filter} -<rx_*.cpp>```
+src_filter = ${env_common_esp32.src_filter} -<rx_*.cpp>
+```
 
 该配置文件包括所有915M diy硬件类型。该配置项为“esp32+Ebyte E19射频模块”硬件。
 首先env_common_esp32是该硬件的代码环境，该环境可在common.ini中找到更具体的信息。
@@ -63,7 +66,8 @@ src_filter = ${env_common_esp32.src_filter} -<rx_*.cpp>```
     while(1){
         loop();
     }
-}```
+}
+```
 setup函数和loop函数作用大致如下：
 setup：(1)初始化串口(2)初始化LED和蜂鸣器、按钮(3)根据种子生成随机数初始化跳频的频率表（FHSSrandomiseFHSSsequence）(4)定义回调函数，其中最重要的是hwTimer.callbackTock=&timerCallbackNormal，硬件时钟回调timerCallbackNormal函数，函数会发送Lora数据包(5)初始化外设，包括硬件时钟、crsf（和opentx控交互数据）
 loop：(1)更新LED灯(2)接受opentx控Lua脚本的设置(3)更新连接状态（连接或断开）(4)处理opentx控通过crsf传来的数据
@@ -91,7 +95,8 @@ lib/SX1280Driver
 #define GPIO_PIN_TX_ENABLE 12
 #define GPIO_PIN_RCSIGNAL_RX 2
 #define GPIO_PIN_RCSIGNAL_TX 2 // so we don't have to solder the extra resistor, we switch rx/tx using gpio mux
-#define GPIO_PIN_LED 27```
+#define GPIO_PIN_LED 27
+```
 
 因为DIY_900_TX_ESP32_SX127x_E19_via_UART硬件的build_flag中有一个TARGET_EXPRESSLRS_PCB_TX_V3，和上述代码对应的上。
 spi的片选信号是esp32的io5，E19射频模块的dio0对应esp32的io26，E19射频模块的dio1对应esp32的io25，spi的MOSI信号是esp32的io23，spi的MISO信号是esp32的io19，spi的时钟信号是esp32的io18。
